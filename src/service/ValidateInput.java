@@ -39,11 +39,11 @@ public class ValidateInput
 		if(! username.matches("^[A-Za-z0-9 ]+$") || username.length() < 2)
 		{
 			if(username.isEmpty()){
-				error = error + "<li>Please type in Username";
+				error = error + "<div class=\"alert alert-danger\">Please type in Username</div>";
 		}
 			else 
 			{
-				error = error + "<li>Username must contain a minimum of 2 characters";
+				error = error + "<div class=\"alert alert-danger\">Username must contain a minimum of 2 characters</div>";
 			}
 		}
 	}
@@ -53,11 +53,11 @@ public class ValidateInput
 	
 		if(password.isEmpty())
 		{
-			error = error + "<li>Please type your password</li>";
+			error = error + "<div class=\"alert alert-danger\">Please type your password</div>";
 		}
 		else if (password.length() < 7 || password.length() > 10 )
 		{
-			error = error + "<li>Password must contain 7-10 chars</li>";
+			error = error + "<div class=\"alert alert-danger\">Password must contain 7-10 chars</div>";
 		}
 		
 		
@@ -70,12 +70,12 @@ public class ValidateInput
 			if(email.isEmpty())
 			{
 //				System.out.println("ikke val"); /debug
-				error = error + "<li>Please type your Email";
+				error = error + "<div class=\"alert alert-danger\">Please type your Email</div>";
 			}
 			else
 			{
 //				System.out.println("ikke val"); /debug
-				error = error + "<li>Email not valid!";
+				error = error + "<div class=\"alert alert-danger\">Email not valid!</div>";
 			}
 		}
 	}
