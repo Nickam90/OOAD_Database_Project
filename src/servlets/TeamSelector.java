@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,11 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.RoleDAO;
+import dao.TeamDAO;
 import dao.TeamInfoDAO;
+import dao.UserDAO;
 import daoimpl.RoleDAOImpl;
+import daoimpl.TeamDAOImpl;
 import daoimpl.TeamInfoDAOImpl;
+import daoimpl.UserDAOImpl;
 import dto.RoleDTO;
+import dto.TeamDTO;
 import dto.TeamInfoDTO;
+import dto.TournamentDTO;
 import dto.UserDTO;
 import exceptions.DALException;
 
@@ -42,6 +51,24 @@ public class TeamSelector extends HttpServlet {
 			TeamInfoDAO tDAO = new TeamInfoDAOImpl();
 			TeamInfoDTO tDTO = tDAO.getTeam(tId);
 			
+			UserDAO uDAO = new UserDAOImpl();
+			UserDTO teamLeader = uDAO.getUser(tDTO.getUserId());
+			String teamLeaderUsername = teamLeader.getUsername();
+			
+			TeamDAO teamDAO = new TeamDAOImpl();
+			List<TeamDTO> teamDTOList;
+			teamDTOList = teamDAO.getMemberList(tId);
+			
+			String memberList = "";
+			
+			for (TeamDTO teamDTO: teamDTOList){
+				memberList += "<a href= \"#\" class=\" list-group-item\">" + uDAO.getUser(teamDTO.getUserId()).getUsername() + "</a>\n";
+			}
+			
+			request.setAttribute("memberList", memberList);
+			request.getSession().setAttribute("team", tDTO);
+			request.getSession().setAttribute("teamLeader", teamLeaderUsername);
+			
 			//user is organizer
 			if((tDTO.getUserId()) == uDTO.getId()){
 				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);			
@@ -63,6 +90,11 @@ public class TeamSelector extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	}
+	
+	private void getMemberList () {
+		
+		
 	}
 
 }
