@@ -20,6 +20,31 @@
 		</div>
 	</div>
 	<h3>View Tournament</h3>
+	
+		<script>
+
+function joinTournament()
+{
+
+}
+function leaveTournament()
+{
+
+}
+
+
+</script>
+
+<div class="container">
+	<div class="col-md-6 list-group">
+		<u1>
+			
+		<button id="joinbtn"onclick="joinTournament()">Join</button>
+		<button id="leavebtn"onclick="levaeTournament()">Leave</button>
+		
+		</ul>
+	</div>
+</div>
 
 </body>
 </html>

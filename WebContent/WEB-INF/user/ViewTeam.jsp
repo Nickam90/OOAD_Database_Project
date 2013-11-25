@@ -21,5 +21,24 @@
 	</div>
 	<h3>View Team</h3>
 
+<script type="text/javascript"></script>
+	
+function leaveTournament()
+{
+
+}
+
+</script>
+
+<div class="container">
+	<div class="col-md-6 list-group">
+		<u1>
+			
+		<button id="leavebtn"onclick="leaveTeam()">leave</button>
+		
+		</ul>
+	</div>
+</div>
+
 </body>
 </html>

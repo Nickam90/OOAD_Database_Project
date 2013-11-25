@@ -20,6 +20,45 @@
 		</div>
 	</div>
 	<h3>Edit Tournament</h3>
+	
+	<script>
+function editTournament()
+{
+
+}
+function startTournament()
+{
+
+}
+
+function endTournament()
+{
+
+}
+function resultTournament()
+{
+
+}
+
+function deleteTournament()
+{
+
+}
+
+</script>
+
+<div class="container">
+	<div class="col-md-6 list-group">
+		<u1>
+			
+		<button id="startbtn"onclick="startTournament()">Start</button>
+		<button id="endbtn"onclick="endTournament()">End Tournament</button>
+		<button id="editbtn"onclick="editTournament()">Edit</button>
+		<button id="resultbtn"onclick="resultTournament()">Enter Results</button>
+		<button id="delbtn"onclick="deleteTournament()">Delete</button>
+		</ul>
+	</div>
+</div>
 
 </body>
 </html>
