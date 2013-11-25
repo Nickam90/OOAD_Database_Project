@@ -19,11 +19,10 @@
 			<hr>
 		</div>
 	</div>
-	<h3>Create Team</h3>
 	<div class="container">
 		<div class="col-md-4 well">
         	<form method="POST" action="CreateTeam">
-            	<h2 class="form-signin-heading">Please sign up</h2>
+            	<h2 class="form-signin-heading">Create New Team</h2>
                 <label> Team Name</label>
                 <input type="text" class="form-control" name="team_name" placeholder="Team Name" autofocus="">
               	<br>
