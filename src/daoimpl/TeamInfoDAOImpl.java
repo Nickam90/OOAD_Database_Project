@@ -22,7 +22,7 @@ public class TeamInfoDAOImpl implements TeamInfoDAO {
 	@Override
 	public void createTeam(TeamInfoDTO team) throws DALException {
 		conn.doUpdate("INSERT INTO TeamInfo(team_name, sport, user_id) VALUES"
-				+ "("
+				+ "('"
 				+ team.getTeamName()
 				+ "','"
 				+ team.getSport() 
@@ -44,13 +44,13 @@ public class TeamInfoDAOImpl implements TeamInfoDAO {
 	}
 	
 	@Override
-	public TeamInfoDTO getTeamId(String teamname) throws DALException {
+	public int getTeamId(String teamname) throws DALException {
 		ResultSet rs = conn.doQuery("SELECT * FROM TeamInfo WHERE team_name = "
 				+ teamname);
 		try {
 			if (!rs.first())
 				throw new DALException("The team " + teamname + " dont exist");
-			return new TeamInfoDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+			return rs.getInt(1);
 		} catch (Exception e) {
 			throw new DALException(e);
 		}
