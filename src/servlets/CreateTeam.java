@@ -106,9 +106,16 @@ public class CreateTeam extends HttpServlet {
 				player.createTeamPlayer(new TeamDTO(teamInfo.getTeamId(name),udto.getId()));
 				request.getRequestDispatcher("/WEB-INF/user/ViewTeam.jsp").forward(request,response);
 			}
-			else{
+			else if(exist){
 				ErrorService error = validate.createError(); 
 				error.setError("<div class=\"alert alert-danger\">Team name already in use</div>");
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("/WEB-INF/user/CreateTeam.jsp").forward(request,response);
+			}
+			
+			else{
+				ErrorService error = validate.createError(); 
+				error.setError("<div class=\"alert alert-danger\">Missing Values</div>");
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/WEB-INF/user/CreateTeam.jsp").forward(request,response);
 			}
