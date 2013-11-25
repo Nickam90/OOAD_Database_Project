@@ -21,28 +21,14 @@
 	</div>
 	<h3>View Tournament</h3>
 	
-		<script>
-
-function joinTournament()
-{
-
-}
-function leaveTournament()
-{
-
-}
-
-
-</script>
-
 <div class="container">
 	<div class="col-md-6 list-group">
 		<ul>
-			
-		<button class="btn btn-lg btn-primary" id="joinbtn"onclick="joinTournament()">Join</button>
-		<button class="btn btn-lg btn-primary" id="leavebtn"onclick="levaeTournament()">Leave</button>
-		
-		</ul>
+		<form action="ViewTournament" method="post">
+   		 <input class="btn btn-lg btn-primary" type="submit" name="joinButton" value="Join" />
+   		 <input class="btn btn-lg btn-primary" type="submit" name="leaveButton" value="Leave" />
+		</form>
+		</ul>	
 	</div>
 	<br>
     <% ErrorService error = (ErrorService) request.getAttribute("error"); %>

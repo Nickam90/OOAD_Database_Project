@@ -44,21 +44,26 @@ public class ViewTournament extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDTO udto;
-		udto = (UserDTO) request.getSession().getAttribute("userObject");
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		udto = (UserDTO) request.getSession().getAttribute("userObject");
+		
+		if (request.getParameter("joinButton") != null) {
+		joinTour(Integer.parseInt(request.getParameter("id")));
+		}
 
 	}
 	public void joinTour(int tournamentId){
 
 		try {
 
+			System.out.println("Join pressed");
 			TeamDAO teamDAO = new TeamDAOImpl();
 			TeamInfoDAO teamIDAO = new TeamInfoDAOImpl();
 			RoleDAO roleDAO = new RoleDAOImpl();
