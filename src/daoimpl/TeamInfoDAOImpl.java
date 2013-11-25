@@ -79,6 +79,19 @@ public class TeamInfoDAOImpl implements TeamInfoDAO {
 						+ team.getUserId()
 				+ "'  WHERE team_id = " + team.getTeamId());
 	}
+	
+	@Override
+	public String getTeamLeader(int teamId) throws DALException {
+		ResultSet rs = conn.doQuery("SELECT * FROM TeamInfo WHERE team_id = '"
+				+ teamId +"'");
+		try {
+			if (!rs.first())
+				throw new DALException("The team leader " + teamId + " dont exist");
+			return rs.getString(4);
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+	}
 
 	@Override
 	public void disableTeam(TeamInfoDTO team) throws DALException {
