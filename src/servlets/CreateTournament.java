@@ -94,7 +94,7 @@ public class CreateTournament extends HttpServlet {
 						exist = true;
 					}
 				}
-				if (!exist||!name.isEmpty()||!sport.isEmpty()||size!=0||!type.isEmpty()||!formatText.isEmpty()) {
+				if (!exist&&!name.isEmpty()&&!sport.isEmpty()&&size!=0&&!type.isEmpty()&&!formatText.isEmpty()) {
 					tour.createTournament(new TournamentDTO(name, sport, size,
 							0, dato, info, typeInt, format));
 					RoleDAO role = new RoleDAOImpl();
