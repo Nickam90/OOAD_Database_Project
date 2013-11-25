@@ -60,6 +60,10 @@ public class Signup extends HttpServlet {
 			password = request.getParameter("password");
 			email = request.getParameter("email");
 			
+			
+			request.setAttribute("usernameField", username);
+			request.setAttribute("emailField", email);
+			
 			try
 			{
 				UserDAO user = new UserDAOImpl();
@@ -67,18 +71,19 @@ public class Signup extends HttpServlet {
 				for(int i = 1 ; i <= user.getUserList().size(); i++){
 					if(user.getUser(i).getUsername().equals(username)){
 						exist = true;
-						System.out.println(exist);
 					}
 					
 				}
 					
 				if(!validate.validate(username, password, email)){
-
-					ErrorService error = validate.createError(); 
-					error.setError("<li>Invalid input</li>");
+					
+					ErrorService error = validate.createError();
+					String errormessage = validate.getError();
+					error.setError(errormessage);
 					request.setAttribute("error", error);
 					dispatcher = request.getRequestDispatcher("SignUp.jsp");
 					dispatcher.forward(request, response);
+					return;
 
 				}
 
@@ -88,6 +93,7 @@ public class Signup extends HttpServlet {
 					user.createUser(newUser);
 					dispatcher = request.getRequestDispatcher("LogIn.jsp");
 					dispatcher.forward(request, response);
+					return;
 
 				}
 				else{
@@ -96,6 +102,7 @@ public class Signup extends HttpServlet {
 					request.setAttribute("error", error);
 					dispatcher = request.getRequestDispatcher("SignUp.jsp");
 					dispatcher.forward(request, response);
+					return;
 				}
 			}
 			catch (DALException e)
