@@ -94,17 +94,19 @@ public class CreateTournament extends HttpServlet {
 						exist = true;
 					}
 				}
-				if (!exist) {
+				if (!exist||!name.isEmpty()||!sport.isEmpty()||size!=0||!type.isEmpty()||!formatText.isEmpty()) {
 					tour.createTournament(new TournamentDTO(name, sport, size,
 							0, dato, info, typeInt, format));
 					RoleDAO role = new RoleDAOImpl();
 					role.createRole(new RoleDTO(uDTO.getId(), tour.getTournamentId(name), 1));
+					request.getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request,response);
 
 				} else {
 					ValidateInput validate = new ValidateInput();
 					ErrorService error = validate.createError();
-					error.setError("<div class=\"alert alert-danger\">Tournament name already taken</div>");
+					error.setError("<div class=\"alert alert-danger\">Invalid input</div>");
 					request.setAttribute("error", error);
+					request.getRequestDispatcher("/WEB-INF/user/CreateTournament.jsp").forward(request,response);
 				}
 
 			}
@@ -113,14 +115,16 @@ public class CreateTournament extends HttpServlet {
 			ErrorService error = validate.createError();
 			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
+			request.getRequestDispatcher("/WEB-INF/user/CreateTournament.jsp").forward(request,response);
 
 		} catch (NullPointerException e) {
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError();
 			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
+			request.getRequestDispatcher("/WEB-INF/user/CreateTournament.jsp").forward(request,response);
 		}
-		request.getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request,response);
+		
 	}
 }
 

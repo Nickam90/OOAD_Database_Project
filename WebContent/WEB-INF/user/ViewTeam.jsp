@@ -21,7 +21,7 @@
 	</div>
 	<h3>View Team</h3>
 
-<script type="text/javascript"></script>
+<script>
 	
 function leaveTournament()
 {

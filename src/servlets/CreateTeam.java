@@ -64,31 +64,35 @@ public class CreateTeam extends HttpServlet {
 					dontExist = false;
 				}
 			}
-			if(dontExist){
+			if(dontExist||!name.isEmpty()||!sport.isEmpty()){
 				team.createTeam(new TeamInfoDTO(name, sport, udto.getId()));
 				TeamDAO player = new TeamDAOImpl();
 				player.createTeamPlayer(new TeamDTO(team.getTeamId(name),udto.getId()));
+				request.getRequestDispatcher("/WEB-INF/user/ViewTeam.jsp").forward(request,response);
 			}
 			else{
 				ValidateInput validate = new ValidateInput();
 				ErrorService error = validate.createError(); 
-				error.setError("<div class=\"alert alert-danger\">Name already taken </div>");
+				error.setError("<div class=\"alert alert-danger\">Invalid input </div>");
 				request.setAttribute("error", error);
+				request.getRequestDispatcher("/WEB-INF/user/CreateTeam.jsp").forward(request,response);
 			}
-
+			
 		}catch (DALException e) {
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError(); 
 			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
+			request.getRequestDispatcher("/WEB-INF/user/CreateTeam.jsp").forward(request,response);
 
 		}catch(NullPointerException e){
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError(); 
 			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
+			request.getRequestDispatcher("/WEB-INF/user/CreateTeam.jsp").forward(request,response);
 		}
-		request.getRequestDispatcher("/WEB-INF/user/ViewTeam.jsp").forward(request,response);
+		
 
 	}
 }
