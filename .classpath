@@ -13,24 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/catalina.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/catalina-ant.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/catalina-ha.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/catalina-tribes.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/ecj-3.6.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/el-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/jasper.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/jasper-el.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-coyote.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-dbcp.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-i18n-es.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-i18n-fr.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-i18n-ja.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-7.0.5/lib/tomcat-util.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Kamstrup/Desktop/ProjectWorkspace/TournamentHostingOOADDATABASE/WebContent/WEB-INF/lib/mysql-connector-java-5.1.24-bin.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.26-bin.jar"/>
+	<classpathentry kind="lib" path="servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
