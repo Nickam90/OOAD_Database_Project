@@ -30,9 +30,7 @@ public class ValidateInput
 		System.out.println(error);
 		return (error.isEmpty());
 	}
-
-
-
+	
 		//####################### ID VALIDERING #######################
 		
 	
@@ -77,7 +75,7 @@ public class ValidateInput
 			else
 			{
 //				System.out.println("ikke val"); /debug
-				error = error + "<li>Email not valid!<li>";
+				error = error + "<li>Email not valid!";
 			}
 		}
 	}
