@@ -49,13 +49,13 @@ function deleteTournament()
 
 <div class="container">
 	<div class="col-md-6 list-group">
-		<u1>
+		<ul>
 			
-		<button id="startbtn"onclick="startTournament()">Start</button>
-		<button id="endbtn"onclick="endTournament()">End Tournament</button>
-		<button id="editbtn"onclick="editTournament()">Edit</button>
-		<button id="resultbtn"onclick="resultTournament()">Enter Results</button>
-		<button id="delbtn"onclick="deleteTournament()">Delete</button>
+		<button class="btn btn-lg btn-primary" id="startbtn"onclick="startTournament()">Start</button>
+		<button class="btn btn-lg btn-primary" id="endbtn"onclick="endTournament()">End Tournament</button>
+		<button class="btn btn-lg btn-primary" id="editbtn"onclick="editTournament()">Edit</button>
+		<button class="btn btn-lg btn-primary" id="resultbtn"onclick="resultTournament()">Enter Results</button>
+		<button class="btn btn-lg btn-primary" id="delbtn"onclick="deleteTournament()">Delete</button>
 				
 		</ul>
 	</div> 

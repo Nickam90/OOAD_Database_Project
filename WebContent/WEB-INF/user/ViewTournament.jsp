@@ -37,10 +37,10 @@ function leaveTournament()
 
 <div class="container">
 	<div class="col-md-6 list-group">
-		<u1>
+		<ul>
 			
-		<button id="joinbtn"onclick="joinTournament()">Join</button>
-		<button id="leavebtn"onclick="levaeTournament()">Leave</button>
+		<button class="btn btn-lg btn-primary" id="joinbtn"onclick="joinTournament()">Join</button>
+		<button class="btn btn-lg btn-primary" id="leavebtn"onclick="levaeTournament()">Leave</button>
 		
 		</ul>
 	</div>

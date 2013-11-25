@@ -32,9 +32,9 @@ function leaveTournament()
 
 <div class="container">
 	<div class="col-md-6 list-group">
-		<u1>
+		<ul>
 			
-		<button id="leavebtn"onclick="leaveTeam()">leave</button>
+		<button class="btn btn-lg btn-primary" id="leavebtn"onclick="leaveTeam()">leave</button>
 		
 		</ul>
 	</div>

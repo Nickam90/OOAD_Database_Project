@@ -42,9 +42,9 @@ function deleteTeam()
 	<div class="col-md-6 list-group">
 		<ul>
 			
-		<button id="addbtn"onclick="addMember()">Add Member</button>
-		<button id="editbtn"onclick="editTeam()">Edit</button>
-		<button id="delbtn"onclick="deleteTeam()">Delete Team</button>				
+		<button class="btn btn-lg btn-primary" id="addbtn"onclick="addMember()">Add Member</button>
+		<button class="btn btn-lg btn-primary" id="editbtn"onclick="editTeam()">Edit</button>
+		<button class="btn btn-lg btn-primary" id="delbtn"onclick="deleteTeam()">Delete Team</button>				
 		</ul>
 	</div> 
 	<br>
