@@ -29,9 +29,9 @@
                 <label>Sport</label>
                 	<select class="form-control" name="Sport">
                     	<option value="" disabled selected>Please select a sport</option>
-                        <option value="sport1">Soccer</option>
-                        <option value="sport2">Tennis</option>
-                        <option value="sport3">Pool</option>
+                        <option value="soccer">Soccer</option>
+                        <option value="tennis">Tennis</option>
+                        <option value="pool">Pool</option>
                     </select>
                 <br>
                 <label>Tournament Format</label>

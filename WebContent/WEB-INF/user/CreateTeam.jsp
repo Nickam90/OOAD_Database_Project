@@ -25,14 +25,14 @@
         	<form method="POST" action="CreateTeam">
             	<h2 class="form-signin-heading">Please sign up</h2>
                 <label> Team Name</label>
-                <input type="text" class="form-control" name="teamName" placeholder="Team Name" autofocus="">
+                <input type="text" class="form-control" name="team_name" placeholder="Team Name" autofocus="">
               	<br>
             	<label>Sport</label>
                 <select class="form-control" name="Sport">
                 <option value="" disabled selected>Please select a sport</option>
-                <option value="sport1">Soccer</option>
-                <option value="sport2">Tennis</option>
-                <option value="sport3">Pool</option>
+                <option value="soccer">Soccer</option>
+                <option value="tennis">Tennis</option>
+                <option value="pool">Pool</option>
                 </select>        
               	<br>
                 <button class="btn btn-lg btn-primary " type="submit">Create</button>
