@@ -26,5 +26,12 @@
     		<p class="lead">Do you want to host your own tournamnets?<br> Our site will help you.</p>
     	</div>
     </div>
+    <%
+		ErrorService error = (ErrorService) request.getAttribute("error");
+	%>
+	<%
+		if (error != null)
+			out.println(error.getError());
+	%>
 </body>
 </html>
