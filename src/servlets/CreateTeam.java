@@ -53,7 +53,7 @@ public class CreateTeam extends HttpServlet {
 		boolean dontExist = true;
 
 		try {
-			name = request.getParameter("tournament_name");
+			name = request.getParameter("team_name");
 			sport = request.getParameter("Sport");
 
 
@@ -66,7 +66,7 @@ public class CreateTeam extends HttpServlet {
 			if(dontExist){
 				team.createTeam(new TeamInfoDTO(name, sport, udto.getId()));
 				TeamDAO player = new TeamDAOImpl();
-				player.createTeamPlayer(new TeamDTO(team.getTeamId(name).getTeamId(),udto.getId()));
+				player.createTeamPlayer(new TeamDTO(team.getTeamId(name),udto.getId()));
 			}
 			else{
 				ValidateInput validate = new ValidateInput();
