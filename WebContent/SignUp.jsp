@@ -22,7 +22,7 @@
 	</div>
     <div class="container">
     	<div class="col-md-4 well">
-        	<form class="form-signin" role="form"  method="POST" action="SignUpServlet">
+        	<form class="form-signin" role="form"  method="POST" action="Signup">
         		<h2 class="form-signin-heading">Please sign up</h2>
         		<label>Email address</label>
        			<input type="email" class="form-control" placeholder="Email address" autofocus="" name="email">

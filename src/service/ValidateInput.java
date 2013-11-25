@@ -13,7 +13,7 @@ public class ValidateInput
 {
 	private String error = "";
 
-	public boolean validate(int user_id, String username, String password, String email)
+	public boolean validate(String username, String password, String email)
 	{
 		error = "";
 		
@@ -57,9 +57,9 @@ public class ValidateInput
 		{
 			error = error + "<li>Please type your password</li>";
 		}
-		else if (password.length() < 7)
+		else if (password.length() < 7 || password.length() > 10 )
 		{
-			error = error + "<li>Password must contain 7-8 chars</li>";
+			error = error + "<li>Password must contain 7-10 chars</li>";
 		}
 		
 		
