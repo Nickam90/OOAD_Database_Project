@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+
 import exceptions.DALException;
 import dto.UserDTO;
 
