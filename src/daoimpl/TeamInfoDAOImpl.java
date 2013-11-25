@@ -45,8 +45,8 @@ public class TeamInfoDAOImpl implements TeamInfoDAO {
 	
 	@Override
 	public int getTeamId(String teamname) throws DALException {
-		ResultSet rs = conn.doQuery("SELECT * FROM TeamInfo WHERE team_name = "
-				+ teamname);
+		ResultSet rs = conn.doQuery("SELECT * FROM TeamInfo WHERE team_name = '"
+				+ teamname +"'");
 		try {
 			if (!rs.first())
 				throw new DALException("The team " + teamname + " dont exist");
