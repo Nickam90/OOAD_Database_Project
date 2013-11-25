@@ -21,7 +21,7 @@
 	</div>
     <div class="container">
     	<div class="col-md-4 well">
-        	<form class="form-signin" method="POST" action="CreateTeam">
+        	<form class="form-signin" method="POST" action="CreateTournament">
             	<h2 class="form-signin-heading">Please sign up</h2>
                 <label> Tournament Name</label>
                 <input type="text" class="form-control" name="tournament_name" placeholder="Tournament Name" autofocus="">
