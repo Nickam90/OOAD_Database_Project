@@ -87,6 +87,7 @@ public class CreateTeam extends HttpServlet {
 			error.setError("<li>Error</li>" + e);
 			request.setAttribute("error", error);
 		}
+		request.getRequestDispatcher("/WEB-INF/user/TeamOverview.jsp").forward(request,response);
 
 	}
 }

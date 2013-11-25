@@ -120,7 +120,6 @@ public class CreateTournament extends HttpServlet {
 			error.setError("<li>Error</li>" + e);
 			request.setAttribute("error", error);
 		}
-
 		request.getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request,response);
 	}
 }
