@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.ErrorService;
 import service.ValidateInput;
 import dao.RoleDAO;
 import dao.TournamentDAO;
@@ -29,6 +30,7 @@ import exceptions.DALException;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	ValidateInput validate = new ValidateInput();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -109,15 +111,18 @@ public class Login extends HttpServlet {
 					this.getServletContext().getRequestDispatcher("/WEB-INF/user/Main.jsp").forward(request, response);
 					
 				} catch (DALException e) {
-					System.out.println("Fejl: " + e);
-					e.printStackTrace();
+					ErrorService error = validate.createError();
+					error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
+					request.setAttribute("error", error);
 				}
 		
 				
 		}
 		//if user doesn't exist in database send back to login
 		else{
-			request.setAttribute("message","<div class=\"alert alert-danger\">Wrong username or password </div>");
+			ErrorService error = validate.createError();
+			error.setError("<div class=\"alert alert-danger\">Can't find user</div>");
+			request.setAttribute("error", error);
 			this.getServletContext().getRequestDispatcher("/LogIn.jsp").forward(request, response);
 		}
 	}

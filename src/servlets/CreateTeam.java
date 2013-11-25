@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import service.ErrorService;
 import service.ValidateInput;
 import dao.TeamDAO;
+import dao.TeamInfoDAO;
 import daoimpl.TeamDAOImpl;
 import daoimpl.TeamInfoDAOImpl;
 import dto.TeamDTO;
@@ -26,7 +27,7 @@ public class CreateTeam extends HttpServlet {
 
 	private String name;
 	private String sport;
-	private TeamInfoDAOImpl team;
+	private TeamInfoDAO team;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -71,20 +72,20 @@ public class CreateTeam extends HttpServlet {
 			else{
 				ValidateInput validate = new ValidateInput();
 				ErrorService error = validate.createError(); 
-				error.setError("<li>Name already taken</li>");
+				error.setError("<div class=\"alert alert-danger\">Name already taken </div>");
 				request.setAttribute("error", error);
 			}
 
 		}catch (DALException e) {
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError(); 
-			error.setError("<li>Error</li>" + e);
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
 
 		}catch(NullPointerException e){
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError(); 
-			error.setError("<li>Error</li>" + e);
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
 		}
 		request.getRequestDispatcher("/WEB-INF/user/ViewTeam.jsp").forward(request,response);

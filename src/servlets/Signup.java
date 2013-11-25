@@ -92,7 +92,7 @@ public class Signup extends HttpServlet {
 				}
 				else{
 					ErrorService error = validate.createError(); 
-					error.setError("<li>Username already taken. Please use another</li>");
+					error.setError("<div class=\"alert alert-danger\">Username already taken</div>");
 					request.setAttribute("error", error);
 					dispatcher = request.getRequestDispatcher("SignUp.jsp");
 					dispatcher.forward(request, response);

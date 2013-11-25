@@ -103,7 +103,7 @@ public class CreateTournament extends HttpServlet {
 				} else {
 					ValidateInput validate = new ValidateInput();
 					ErrorService error = validate.createError();
-					error.setError("<li>Tournament already taken</li>");
+					error.setError("<div class=\"alert alert-danger\">Tournament name already taken</div>");
 					request.setAttribute("error", error);
 				}
 
@@ -111,13 +111,13 @@ public class CreateTournament extends HttpServlet {
 		} catch (DALException e) {
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError();
-			error.setError("<li>Error</li>" + e);
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
 
 		} catch (NullPointerException e) {
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError();
-			error.setError("<li>Error</li>" + e);
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
 		}
 		request.getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request,response);
