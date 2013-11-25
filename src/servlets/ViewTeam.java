@@ -36,28 +36,7 @@ public class ViewTeam extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-
-			TeamDAO team = new TeamDAOImpl();
-			TeamInfoDAO teamInfo = new TeamInfoDAOImpl();
-			String listElementTeam = "";
-			UserDTO udto = (UserDTO) request.getSession().getAttribute("userObject");
-
-			List<TeamDTO>teamList = team.getTeamPlayerList();
-
-			for(TeamDTO teams: teamList){
-				if(teams.getUserId() == udto.getId()){
-					String url = request.getContextPath() + "/TeamServlet/Team?id="+teams.getTeamId();
-					listElementTeam += "<a href=\""+url+"\" class=\" list-group-item\">" + teamInfo.getTeam(teams.getTeamId()).getTeamName() + "</a>\n";
-				}
-			}
-			request.setAttribute("Teams", listElementTeam);
-
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return;
+		
 	}
 
 	/**

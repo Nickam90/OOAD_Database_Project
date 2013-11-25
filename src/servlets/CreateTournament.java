@@ -121,7 +121,7 @@ public class CreateTournament extends HttpServlet {
 			request.setAttribute("error", error);
 		}
 
-		request.getRequestDispatcher("/WEB-INF/user/ViewTournament.jsp").forward(request,response);
+		request.getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request,response);
 	}
 }
 

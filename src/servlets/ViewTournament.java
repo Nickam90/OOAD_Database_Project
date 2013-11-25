@@ -33,26 +33,7 @@ public class ViewTournament extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		TournamentDAO tournament;
-		try {
-			tournament = new TournamentDAOImpl();
-			List<TournamentDTO> tournList = tournament.getTournamentList();
-			String listElement = "";
-			for (TournamentDTO tourn : tournList) {
-				String url = request.getContextPath()
-						+ "/TournamentServlet/Tournament?id=" + tourn.getId();
-				listElement += "<a href=\"" + url
-						+ "\" class=\" list-group-item\">"
-						+ tourn.getTournamentName() + "</a>\n";
-			}
-			request.setAttribute("TournList", listElement);
-
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		return;
 	}
 
 	/**
