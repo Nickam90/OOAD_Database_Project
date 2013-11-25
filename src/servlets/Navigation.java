@@ -20,6 +20,7 @@ import daoimpl.TeamInfoDAOImpl;
 import daoimpl.TournamentDAOImpl;
 import dto.RoleDTO;
 import dto.TeamDTO;
+import dto.TeamInfoDTO;
 import dto.TournamentDTO;
 import dto.UserDTO;
 import exceptions.DALException;
@@ -95,8 +96,7 @@ public class Navigation extends HttpServlet {
 			
 			for(TeamDTO teams: teamList){
 				if(teams.getUserId() == udto.getId()){
-					String url = request.getContextPath() + "/TeamServlet/Team?id="+teams.getTeamId();
-					listTeams += "<a href=\""+url+"\" class=\" list-group-item\">" + teamInfo.getTeam(teams.getTeamId()).getTeamName() + "</a>\n";
+					listTeams += "<a href=\"TeamSelector?id="+teams.getTeamId()+"\" class=\" list-group-item\">" + teamInfo.getTeam(teams.getTeamId()).getTeamName() + "</a>\n";
 				}
 			}
 
