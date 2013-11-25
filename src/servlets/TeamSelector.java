@@ -7,6 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.RoleDAO;
+import dao.TeamInfoDAO;
+import daoimpl.RoleDAOImpl;
+import daoimpl.TeamInfoDAOImpl;
+import dto.RoleDTO;
+import dto.TeamInfoDTO;
+import dto.UserDTO;
+import exceptions.DALException;
+
 /**
  * Servlet implementation class TeamSelector
  */
@@ -26,7 +35,27 @@ public class TeamSelector extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int tId = Integer.parseInt(request.getParameter("id"));
+		UserDTO uDTO = (UserDTO) request.getSession().getAttribute("userObject");
+		
+		try {
+			TeamInfoDAO tDAO = new TeamInfoDAOImpl();
+			TeamInfoDTO tDTO = tDAO.getTeam(tId);
+			
+			//user is organizer
+			if((tDTO.getUserId()) == uDTO.getId()){
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);			
+			}
+			//user is participant
+			else{
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/ViewTeam.jsp").forward(request, response);				
+			}
+		} 
+		// user is neither a participant nor a organizer so he is forwarded to view tournament
+		catch (DALException e) {
+			
+			this.getServletContext().getRequestDispatcher("/WEB-INF/user/TeamOverview.jsp").forward(request, response);
+		}
 	}
 
 	/**
