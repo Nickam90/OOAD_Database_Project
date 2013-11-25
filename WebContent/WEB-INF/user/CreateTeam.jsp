@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"import="service.ErrorService"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,9 +35,13 @@
                 <option value="pool">Pool</option>
                 </select>        
               	<br>
-                <button class="btn btn-lg btn-primary " type="submit">Create</button>
+                <button class="btn btn-lg btn-primary " type="submit">Create</button> 	
 			</form>
+			<br>
+            <% ErrorService error = (ErrorService) request.getAttribute("error"); %>
+			<% if (error != null) out.println(error.getError()); %>
 		</div>
 	</div>
+	
 </body>
 </html>

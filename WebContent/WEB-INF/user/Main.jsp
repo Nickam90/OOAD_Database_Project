@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"import="service.ErrorService"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,6 +35,10 @@
 				 ${orgOfList}
 			</ul>
 		</div>
+		<br>
+        <% ErrorService error = (ErrorService) request.getAttribute("error"); %>
+		<% if (error != null) out.println(error.getError()); %>
 	</div>
+	
 </body>
 </html>
