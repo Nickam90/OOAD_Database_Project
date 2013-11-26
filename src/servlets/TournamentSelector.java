@@ -13,8 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import dao.RoleDAO;
+import dao.TeamInfoDAO;
+import dao.TournamentDAO;
 import daoimpl.RoleDAOImpl;
+import daoimpl.TeamInfoDAOImpl;
+import daoimpl.TournamentDAOImpl;
 import dto.RoleDTO;
+import dto.TeamInfoDTO;
+import dto.TournamentDTO;
 import dto.UserDTO;
 import exceptions.DALException;
 
@@ -39,6 +45,7 @@ public class TournamentSelector extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int tId = Integer.parseInt(request.getParameter("id"));
 		UserDTO uDTO = (UserDTO) request.getSession().getAttribute("userObject");
+		
 		
 		//Get bracket
 		// the following string b (from the example from the homepage)
@@ -89,11 +96,16 @@ public class TournamentSelector extends HttpServlet {
 		request.setAttribute("bracketData", bracket.toString());
 		//code end
 		
-		request.setAttribute("tournamentID", tId);
+		
+		
 		
 		try {
+			TournamentDAO tDAO = new TournamentDAOImpl();
+			TournamentDTO tDTO = tDAO.getTournament(tId);
 			RoleDAO rDAO = new RoleDAOImpl();
 			RoleDTO rDTO = rDAO.getRole(uDTO.getId(), tId);
+			
+			request.getSession().setAttribute("Tournament", tDTO);
 			
 			//user is organizer
 			if((rDTO.getRole()) == 1){
