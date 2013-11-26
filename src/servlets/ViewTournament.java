@@ -83,8 +83,11 @@ public class ViewTournament extends HttpServlet {
 			ErrorService error = validate.createError();
 			error.setError("<div class=\"alert alert-danger\">Cant join or leave a tournament in progress</div>");
 			request.setAttribute("error", error);
-			this.getServletContext().getRequestDispatcher("/LogIn.jsp").forward(request, response);
 		}
+		
+		request.setAttribute("id", tId);
+		response.sendRedirect(request.getContextPath() + "/TournamentSelector?id=" + tId);
+//		this.getServletContext().getRequestDispatcher("/WEB-INF/user/ViewTournament.jsp").forward(request, response);
 
 	}
 	private void leaveTour(int tournamentId, HttpServletRequest request, HttpServletResponse response) {
@@ -138,7 +141,7 @@ public class ViewTournament extends HttpServlet {
 			for(TeamInfoDTO teamIDTO : teamIList){
 				if(teamIDTO.getUserId()==udto.getId()&&teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
 					for(TeamDTO teamDTO: teamList){
-						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()&&roleDAO.getRole(teamDTO.getUserId(), tId).getRole()!=1){
+						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
 							roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
 							System.out.println(teamDTO.getUserId() + "Joined");
 						}

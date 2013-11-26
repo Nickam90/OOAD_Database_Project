@@ -42,6 +42,8 @@
 				out.print("</div>");
 			}	
 		%>
+		
+	<% out.print("Are you participant in this tournament? : " + request.getAttribute("participant"));%>
 
 	
 	<div class="col-md-6 list-group">

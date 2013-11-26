@@ -97,18 +97,23 @@ public class TournamentSelector extends HttpServlet {
 		//code end
 		
 		
-		
-		
 		try {
 			TournamentDAO tDAO = new TournamentDAOImpl();
 			TournamentDTO tDTO = tDAO.getTournament(tId);
+			request.getSession().setAttribute("Tournament", tDTO);
+		}
+		catch (DALException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
 			RoleDAO rDAO = new RoleDAOImpl();
 			RoleDTO rDTO = rDAO.getRole(uDTO.getId(), tId);
 			
-			request.getSession().setAttribute("Tournament", tDTO);
-			
 			//user is organizer
 			if((rDTO.getRole()) == 1){
+				request.setAttribute("organisor", true);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request, response);			
 			}
 			//user is participant
