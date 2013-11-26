@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="service.ErrorService"%>
+	pageEncoding="UTF-8" import="service.ErrorService" import="dto.TournamentDTO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<% ErrorService error = (ErrorService) request.getAttribute("error"); %>
+<%
+	ErrorService error = (ErrorService) request.getAttribute("error");
+%>
+
+<% TournamentDTO tDTO = (TournamentDTO) request.getSession().getAttribute("Tournament"); %>
 
 <html>
 <head>
@@ -10,9 +14,11 @@
 <title>View Tournament</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="css/bootstrap.css" rel="stylesheet">
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="bracket/jquery.bracket.min.js"></script>
-<link rel="stylesheet" type="text/css" href="bracket/jquery.bracket.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="bracket/jquery.bracket.min.css" />
 <style type="text/css"></style>
 <script type="text/javascript">
 	var bracketData = $.parseJSON('${bracketData}');
@@ -33,31 +39,43 @@
 			<hr>
 		</div>
 	</div>
-	<h3>View Tournament</h3>
-
-		<%
-			if (error != null) {
-				out.print("<div class=\"col-md-4 well\" id=\"content\">");
-				out.println(error.getError());
-				out.print("</div>");
-			}	
-		%>
-		
-	<% out.print("Are you participant in this tournament? : " + request.getAttribute("participant"));%>
-
+	<h1>View Tournament</h1>
+	<br>
 	
+	<% out.print("<h3>" + tDTO.getTournamentName() + "</h3>"); %>
+
+	<%
+		if (error != null) {
+			out.print("<div class=\"col-md-4 well\" id=\"content\">");
+			out.println(error.getError());
+			out.print("</div>");
+		}
+	%>
+
+	<%
+		Boolean participant = (Boolean) request.getAttribute("participant");
+	%>
+	<%
+		out.print("Are you participant in this tournament? : " + request.getAttribute("participant"));
+	%>
+
+
 	<div class="col-md-6 list-group">
 		<ul>
 			<form action="ViewTournament" method="post">
-				<input class="btn btn-lg btn-primary" type="submit"
-					name="joinButton" value="Join" /> <input
-					class="btn btn-lg btn-primary" type="submit" name="leaveButton"
-					value="Leave" />
+			
+			<% if (participant != null)
+				out.print("<input class=\"btn btn-lg btn-primary\" type=\"submit\" name=\"leaveButton\" value=\"Leave\" />");
+			else
+				out.print("<input class=\"btn btn-lg btn-primary\" type=\"submit\" name=\"joinButton\" value=\"Join\" />");
+			%>
+		
+<!-- 				<input class="btn btn-lg btn-primary" type="submit" name="joinButton" value="Join" /> -->
+<!-- 				<input class="btn btn-lg btn-primary" type="submit" name="leaveButton" value="Leave" /> -->
 			</form>
 		</ul>
 	</div>
-	<div id="bracket">
-	</div>
+	<div id="bracket"></div>
 	<br>
 
 </body>

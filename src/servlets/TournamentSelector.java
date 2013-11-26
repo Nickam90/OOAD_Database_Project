@@ -118,6 +118,7 @@ public class TournamentSelector extends HttpServlet {
 			}
 			//user is participant
 			else{
+				request.setAttribute("participant", true);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/user/ViewTournament.jsp").forward(request, response);				
 			}
 		} 
