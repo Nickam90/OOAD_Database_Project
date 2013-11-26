@@ -103,7 +103,11 @@ public class TournamentSelector extends HttpServlet {
 			request.getSession().setAttribute("Tournament", tDTO);
 		}
 		catch (DALException e) {
-			e.printStackTrace();
+			String error = e.getMessage();
+			System.out.println(error);
+			request.setAttribute("error", error);
+			this.getServletContext().getRequestDispatcher("/errorpage.jsp").forward(request, response);
+			return;
 		}
 		
 		
