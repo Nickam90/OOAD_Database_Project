@@ -40,6 +40,8 @@ public class TournamentSelector extends HttpServlet {
 			RoleDAO rDAO = new RoleDAOImpl();
 			RoleDTO rDTO = rDAO.getRole(uDTO.getId(), tId);
 			
+			request.setAttribute("tournamentID", tId);
+			
 			//user is organizer
 			if((rDTO.getRole()) == 1){
 				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request, response);			
