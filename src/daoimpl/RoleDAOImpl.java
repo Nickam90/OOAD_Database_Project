@@ -78,7 +78,8 @@ public class RoleDAOImpl implements RoleDAO {
 
 	@Override
 	public void disableRole(RoleDTO role) throws DALException {
-		// TODO Auto-generated method stub
+		conn.doUpdate("DELETE FROM Role WHERE user_id = "
+				+ role.getUserId() + " AND " + "role = "+ role.getRole());
 
 	}
 
