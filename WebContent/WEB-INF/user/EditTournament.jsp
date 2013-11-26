@@ -10,6 +10,7 @@
     <style type="text/css"></style>
 </head>
 <body>
+	<body>
 	<div class="container">
 		<div class="header">
 			<ul class="nav nav-pills pull-right">
@@ -19,50 +20,26 @@
 			<hr>
 		</div>
 	</div>
-	<h3>Edit Tournament</h3>
+	<h3>View Tournament</h3>
 	
-	<script>
-function editTournament()
-{
-
-}
-function startTournament()
-{
-
-}
-
-function endTournament()
-{
-
-}
-function resultTournament()
-{
-
-}
-
-function deleteTournament()
-{
-
-}
-
-</script>
-
-<div class="container">
-	<div class="col-md-6 list-group">
-		<ul>
-			
-		<button class="btn btn-lg btn-primary" id="startbtn"onclick="startTournament()">Start</button>
-		<button class="btn btn-lg btn-primary" id="endbtn"onclick="endTournament()">End Tournament</button>
-		<button class="btn btn-lg btn-primary" id="editbtn"onclick="editTournament()">Edit</button>
-		<button class="btn btn-lg btn-primary" id="resultbtn"onclick="resultTournament()">Enter Results</button>
-		<button class="btn btn-lg btn-primary" id="delbtn"onclick="deleteTournament()">Delete</button>
-				
-		</ul>
-	</div> 
-	<br>
+<div class="col-md-4 well" id="content">
+	
     <% ErrorService error = (ErrorService) request.getAttribute("error"); %>
 	<% if (error != null) out.println(error.getError()); %>
+	
 </div>
+<div class="col-md-6 list-group">
+		<ul>
+		<form action="ViewTournament" method="post">
+   		 <input class="btn btn-lg btn-primary" type="submit" name="StartButton" value="Start" />
+   		 <input class="btn btn-lg btn-primary" type="submit" name="editButton" value="Edit" />
+   		 <input class="btn btn-lg btn-primary" type="submit" name="resButton" value="Enter Results" />
+   		 <input class="btn btn-lg btn-primary" type="submit" name="delButton" value="Delete" />
+		</form>
+		</ul>	
+	</div>
+	<br>
 
 </body>
+		
 </html>
