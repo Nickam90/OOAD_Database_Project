@@ -1,11 +1,11 @@
 package dto;
 
-public class ParticipentDTO {
+public class ParticipentListDTO {
 
 	private int tournamentId;
 	private int teamId;
 
-	public ParticipentDTO(int teamId, int tournamentId){
+	public ParticipentListDTO(int teamId, int tournamentId){
 		this.teamId=teamId;
 		this.tournamentId=tournamentId;
 

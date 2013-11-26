@@ -2,15 +2,15 @@ package dao;
 
 import java.util.List;
 
-import dto.ParticipentDTO;
+import dto.ParticipentListDTO;
 
 import exceptions.DALException;
 
 public interface ParticipentListDAO {
 	
-	void createParticipent(ParticipentDTO participent) throws DALException;
-	List<ParticipentDTO> getParticipent(int particpentId) throws DALException;
-	void updateParticipent(ParticipentDTO participentList) throws DALException;
-	void disableParticipent(ParticipentDTO participent) throws DALException;
+	void createParticipent(ParticipentListDTO participent) throws DALException;
+	List<ParticipentListDTO> getParticipentList(int particpentId) throws DALException;
+	void updateParticipent(ParticipentListDTO participentList) throws DALException;
+	void disableParticipent(ParticipentListDTO participent) throws DALException;
 
 }
