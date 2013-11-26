@@ -84,10 +84,10 @@ public class ViewTournament extends HttpServlet {
 			error.setError("<div class=\"alert alert-danger\">Cant join or leave a tournament in progress</div>");
 			request.setAttribute("error", error);
 		}
-		
+
 		request.setAttribute("id", tId);
 		response.sendRedirect(request.getContextPath() + "/TournamentSelector?id=" + tId);
-//		this.getServletContext().getRequestDispatcher("/WEB-INF/user/ViewTournament.jsp").forward(request, response);
+		//		this.getServletContext().getRequestDispatcher("/WEB-INF/user/ViewTournament.jsp").forward(request, response);
 
 	}
 	private void leaveTour(int tournamentId, HttpServletRequest request, HttpServletResponse response) {
@@ -138,14 +138,23 @@ public class ViewTournament extends HttpServlet {
 			tourDAO = new TournamentDAOImpl();
 			tourDTO = tourDAO.getTournament(tournamentId);
 
+
 			for(TeamInfoDTO teamIDTO : teamIList){
-				if(teamIDTO.getUserId()==udto.getId()&&teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
-					for(TeamDTO teamDTO: teamList){
-						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
-							roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
-							System.out.println(teamDTO.getUserId() + "Joined");
+				if(teamIDTO.getUserId()==udto.getId()){
+					if(teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
+						for(TeamDTO teamDTO: teamList){
+							if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
+								roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
+								System.out.println(teamDTO.getUserId() + "Joined");
+							}
 						}
 					}
+					else{
+						System.out.println("Bruger ikke team leader for en sport");	
+					}
+				}
+				else{
+					System.out.println("Bruger ikke team leader");
 				}
 			}
 
