@@ -71,10 +71,10 @@ public class ViewTournament extends HttpServlet {
 
 			if (request.getParameter("joinButton") != null) {
 				System.out.println("Joining Tour");
-				joinTour(tId);
+				joinTour(tId,request,response);
 			}
 			else if(request.getParameter("leaveButton") != null){
-				leaveTour(tId);
+				leaveTour(tId,request,response);
 			}
 		}
 		else{
@@ -86,7 +86,7 @@ public class ViewTournament extends HttpServlet {
 		}
 
 	}
-	private void leaveTour(int tournamentId) {
+	private void leaveTour(int tournamentId, HttpServletRequest request, HttpServletResponse response) {
 
 		System.out.println("Leave pressed");
 
@@ -113,13 +113,15 @@ public class ViewTournament extends HttpServlet {
 
 		}
 		catch (DALException e) {
-
-			e.printStackTrace();
+			ValidateInput validate = new ValidateInput();
+			ErrorService error = validate.createError();
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
+			request.setAttribute("error", error);
 		}
 
 	}
 
-	public void joinTour(int tournamentId){
+	public void joinTour(int tournamentId, HttpServletRequest request, HttpServletResponse response){
 
 		try {
 
@@ -148,7 +150,10 @@ public class ViewTournament extends HttpServlet {
 
 		} catch (DALException e) {
 
-			e.printStackTrace();
+			ValidateInput validate = new ValidateInput();
+			ErrorService error = validate.createError();
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
+			request.setAttribute("error", error);
 		}
 
 	}
