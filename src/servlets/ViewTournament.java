@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.ValidateInput;
+
 import dao.RoleDAO;
 import dao.TeamDAO;
 import dao.TeamInfoDAO;
@@ -31,7 +33,16 @@ import exceptions.DALException;
 public class ViewTournament extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	UserDTO udto;
+	private UserDTO udto;
+	private int tId;
+	private TeamDAO teamDAO;
+	private TeamInfoDAO teamIDAO;
+	private RoleDAO roleDAO;
+	private List<TeamInfoDTO> teamIList;
+	private List<TeamDTO> teamList;
+	private List<RoleDTO> roleList;
+	private TournamentDAO tourDAO;
+	private TournamentDTO tourDTO;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -44,8 +55,8 @@ public class ViewTournament extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+
+
 	}
 
 	/**
@@ -53,31 +64,73 @@ public class ViewTournament extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		udto = (UserDTO) request.getSession().getAttribute("userObject");
-		
+		tId = (Integer) request.getAttribute("tournamentID");
+
 		if (request.getParameter("joinButton") != null) {
-		joinTour(Integer.parseInt(request.getParameter("id")));
+			System.out.println("Joining Tour");
+			joinTour(tId);
+		}
+		else if(request.getParameter("leaveButton") != null){
+			leaveTour(tId);
 		}
 
 	}
+	private void leaveTour(int tournamentId) {
+
+		System.out.println("Leave pressed");
+
+		try{
+			teamDAO = new TeamDAOImpl();
+			teamIDAO = new TeamInfoDAOImpl();
+			roleDAO = new RoleDAOImpl();
+			roleList = roleDAO.getRoleList();
+			teamIList = teamIDAO.getTeamList();
+			teamList = teamDAO.getTeamPlayerList();	
+			tourDAO = new TournamentDAOImpl();
+			tourDTO = tourDAO.getTournament(tournamentId);
+
+			for(TeamInfoDTO teamIDTO : teamIList){
+				if(teamIDTO.getUserId()==udto.getId()&&teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
+					for(TeamDTO teamDTO: teamList){
+						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
+							roleDAO.disableRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
+							System.out.println(teamDTO.getUserId() + "Leaved");
+						}
+					}
+				}
+				else{
+					System.out.println("Fejl bruger er ikke teamleader for et hold til turneringens sport");
+				}
+			}
+
+
+		}
+		catch (DALException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
 	public void joinTour(int tournamentId){
 
 		try {
 
 			System.out.println("Join pressed");
-			TeamDAO teamDAO = new TeamDAOImpl();
-			TeamInfoDAO teamIDAO = new TeamInfoDAOImpl();
-			RoleDAO roleDAO = new RoleDAOImpl();
-			List<TeamInfoDTO> teamIList = teamIDAO.getTeamList();
-			List<TeamDTO> teamList = teamDAO.getTeamPlayerList();
-
-			TournamentDAO tourDAO = new TournamentDAOImpl();
-			TournamentDTO tourDTO = tourDAO.getTournament(tournamentId);
+			teamDAO = new TeamDAOImpl();
+			teamIDAO = new TeamInfoDAOImpl();
+			roleDAO = new RoleDAOImpl();
+			teamIList = teamIDAO.getTeamList();
+			teamList = teamDAO.getTeamPlayerList();
+			tourDAO = new TournamentDAOImpl();
+			tourDTO = tourDAO.getTournament(tournamentId);
 
 			for(TeamInfoDTO teamIDTO : teamIList){
 				if(teamIDTO.getUserId()==udto.getId()&&teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
 					for(TeamDTO teamDTO: teamList){
 						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
 							roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
+							System.out.println(teamDTO.getUserId() + "Joined");
 						}
 					}
 				}
