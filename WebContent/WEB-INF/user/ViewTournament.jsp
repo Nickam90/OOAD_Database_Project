@@ -21,8 +21,13 @@
 	</div>
 	<h3>View Tournament</h3>
 	
-<div class="container">
-	<div class="col-md-6 list-group">
+<div class="col-md-4 well" id="content">
+	
+    <% ErrorService error = (ErrorService) request.getAttribute("error"); %>
+	<% if (error != null) out.println(error.getError()); %>
+	
+</div>
+<div class="col-md-6 list-group">
 		<ul>
 		<form action="ViewTournament" method="post">
    		 <input class="btn btn-lg btn-primary" type="submit" name="joinButton" value="Join" />
@@ -31,9 +36,6 @@
 		</ul>	
 	</div>
 	<br>
-    <% ErrorService error = (ErrorService) request.getAttribute("error"); %>
-	<% if (error != null) out.println(error.getError()); %>
-</div>
 
 </body>
 </html>
