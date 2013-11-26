@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="service.ErrorService"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<% ErrorService error = (ErrorService) request.getAttribute("error"); %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,17 +35,15 @@
 	</div>
 	<h3>View Tournament</h3>
 
-	<div class="col-md-4 well" id="content">
-
 		<%
-			ErrorService error = (ErrorService) request.getAttribute("error");
-		%>
-		<%
-			if (error != null)
+			if (error != null) {
+				out.print("<div class=\"col-md-4 well\" id=\"content\">");
 				out.println(error.getError());
+				out.print("</div>");
+			}	
 		%>
 
-	</div>
+	
 	<div class="col-md-6 list-group">
 		<ul>
 			<form action="ViewTournament" method="post">
