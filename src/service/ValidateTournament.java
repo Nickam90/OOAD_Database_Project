@@ -29,7 +29,7 @@ public class ValidateTournament {
 	}
 
 	private void validateName(String name) {
-		if(!name.matches("^[A-Za-z ]+$") || name.length() < 2 || name.length() > 30){
+		if(name.length() < 2 || name.length() > 30){
 			if(name.isEmpty()){
 				error = error + "Please type in a name.";
 			}

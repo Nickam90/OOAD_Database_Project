@@ -99,7 +99,7 @@ public class CreateTournament extends HttpServlet {
 							0, dato, info, typeInt, format));
 					RoleDAO role = new RoleDAOImpl();
 					role.createRole(new RoleDTO(uDTO.getId(), tour.getTournamentId(name), 1));
-					request.getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request,response);
+					response.sendRedirect(request.getContextPath() + "/TournamentSelector?id=" + tour.getTournamentId(name));
 
 				} else {
 					ValidateInput validate = new ValidateInput();
@@ -109,6 +109,13 @@ public class CreateTournament extends HttpServlet {
 					request.getRequestDispatcher("/WEB-INF/user/CreateTournament.jsp").forward(request,response);
 				}
 
+			}
+			else{
+				ValidateInput validate = new ValidateInput();
+				ErrorService error = validate.createError();
+				error.setError("<div class=\"alert alert-danger\">"+error+"</div>");
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("/WEB-INF/user/CreateTournament.jsp").forward(request,response);
 			}
 		} catch (DALException e) {
 			ValidateInput validate = new ValidateInput();

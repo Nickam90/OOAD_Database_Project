@@ -104,7 +104,7 @@ public class CreateTeam extends HttpServlet {
 				teamInfo.createTeam(new TeamInfoDTO(name, sport, udto.getId()));
 				TeamDAO player = new TeamDAOImpl();
 				player.createTeamPlayer(new TeamDTO(teamInfo.getTeamId(name),udto.getId()));
-				request.getRequestDispatcher("/WEB-INF/user/ViewTeam.jsp").forward(request,response);
+				response.sendRedirect(request.getContextPath() + "/TeamSelector?id=" + teamInfo.getTeamId(name));
 			}
 			else if(exist){
 				ErrorService error = validate.createError(); 
