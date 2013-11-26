@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.ErrorService;
 import service.ValidateInput;
 
 import dao.RoleDAO;
@@ -40,7 +41,6 @@ public class ViewTournament extends HttpServlet {
 	private RoleDAO roleDAO;
 	private List<TeamInfoDTO> teamIList;
 	private List<TeamDTO> teamList;
-	private List<RoleDTO> roleList;
 	private TournamentDAO tourDAO;
 	private TournamentDTO tourDTO;
 	/**
@@ -64,14 +64,25 @@ public class ViewTournament extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		udto = (UserDTO) request.getSession().getAttribute("userObject");
-		tId = (Integer) request.getAttribute("tournamentID");
+		TournamentDTO tDTO = (TournamentDTO) request.getSession().getAttribute("Tournament");	
+		tId = tDTO.getId();
 
-		if (request.getParameter("joinButton") != null) {
-			System.out.println("Joining Tour");
-			joinTour(tId);
+		if(tDTO.getStatus()!=0){
+
+			if (request.getParameter("joinButton") != null) {
+				System.out.println("Joining Tour");
+				joinTour(tId);
+			}
+			else if(request.getParameter("leaveButton") != null){
+				leaveTour(tId);
+			}
 		}
-		else if(request.getParameter("leaveButton") != null){
-			leaveTour(tId);
+		else{
+			ValidateInput validate = new ValidateInput();
+			ErrorService error = validate.createError();
+			error.setError("<div class=\"alert alert-danger\">Cant join or leave a tournament i progress</div>");
+			request.setAttribute("error", error);
+			this.getServletContext().getRequestDispatcher("/LogIn.jsp").forward(request, response);
 		}
 
 	}
@@ -83,7 +94,6 @@ public class ViewTournament extends HttpServlet {
 			teamDAO = new TeamDAOImpl();
 			teamIDAO = new TeamInfoDAOImpl();
 			roleDAO = new RoleDAOImpl();
-			roleList = roleDAO.getRoleList();
 			teamIList = teamIDAO.getTeamList();
 			teamList = teamDAO.getTeamPlayerList();	
 			tourDAO = new TournamentDAOImpl();
