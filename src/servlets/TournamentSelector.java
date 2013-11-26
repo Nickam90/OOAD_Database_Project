@@ -1,12 +1,16 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import dao.RoleDAO;
 import daoimpl.RoleDAOImpl;
@@ -41,6 +45,54 @@ public class TournamentSelector extends HttpServlet {
 			RoleDTO rDTO = rDAO.getRole(uDTO.getId(), tId);
 			
 			request.setAttribute("tournamentID", tId);
+			//Get bracket
+			// the following string b (from the example from the homepage)
+			String b = "{\"teams\":[[\"Team 1\",\"Team 2\"],[\"Team 3\",\"Team 4\"]],\"results\":[[[[1,0],[2,7]]]]}";
+			//is created by the following code
+			//code start
+			JSONObject bracket = new JSONObject();
+			JSONArray matches = new JSONArray();
+			JSONArray results = new JSONArray();
+			ArrayList<JSONArray> rounds = new ArrayList<JSONArray>();
+			
+			JSONArray matchup1 = new JSONArray();//DO this for every matchup
+			matchup1.put("Team1");
+			matchup1.put("Team2"); 
+			matches.put(matchup1);
+			
+			JSONArray matchup2 = new JSONArray();//Another one
+			matchup2.put("Team3");
+			matchup2.put("Team4"); 
+			matches.put(matchup2);
+			
+			JSONArray round1 = new JSONArray();//One array per round
+			JSONArray result1 = new JSONArray();
+			result1.put(1);
+			result1.put(3);
+			round1.put(result1);
+			JSONArray result2 = new JSONArray();//One array per round
+			result2.put(5);
+			result2.put(6);
+			round1.put(result2);
+			//after every result is in the round
+			rounds.add(round1);
+			
+			JSONArray round2 = new JSONArray();//One array per round
+			JSONArray result3 = new JSONArray();
+			result3.put(12);
+			result3.put(0);
+			round2.put(result3);
+			rounds.add(round2);
+			
+			//Prepare the JSONObject
+			for (JSONArray round : rounds)//Save all rounds
+				results.put(round);
+			
+			bracket.put("teams", matches);
+			bracket.put("results", results);
+			System.out.println(bracket.toString());
+			request.setAttribute("bracketData", bracket.toString());
+			//code end
 			
 			//user is organizer
 			if((rDTO.getRole()) == 1){
