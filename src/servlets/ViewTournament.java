@@ -65,7 +65,6 @@ public class ViewTournament extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		udto = (UserDTO) request.getSession().getAttribute("userObject");
 		TournamentDTO tDTO = (TournamentDTO) request.getSession().getAttribute("Tournament");
-		System.out.println(tDTO);
 		tId = tDTO.getId();
 
 		if(tDTO.getStatus()==0){
@@ -105,12 +104,9 @@ public class ViewTournament extends HttpServlet {
 					for(TeamDTO teamDTO: teamList){
 						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
 							roleDAO.disableRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
-							System.out.println(teamDTO.getUserId() + "Leaved");
+							System.out.println(teamDTO.getUserId() + " leaved");
 						}
 					}
-				}
-				else{
-					System.out.println("Fejl bruger er ikke teamleader for et hold til turneringens sport");
 				}
 			}
 
