@@ -12,5 +12,6 @@ public interface TeamDAO {
 	void updateTeamPlayer(TeamDTO team) throws DALException;
 	void disableTeamLeader(TeamDTO role) throws DALException;
 	List<TeamDTO> getMemberList(int teamId) throws DALException;
+	List<TeamDTO> getTeamList(int userId) throws DALException;
 	
 }

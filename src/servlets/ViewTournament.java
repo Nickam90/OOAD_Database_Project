@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,15 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.ErrorService;
 import service.ValidateInput;
-
 import dao.RoleDAO;
 import dao.TeamDAO;
 import dao.TeamInfoDAO;
 import dao.TournamentDAO;
+import dao.UserDAO;
 import daoimpl.RoleDAOImpl;
 import daoimpl.TeamDAOImpl;
 import daoimpl.TeamInfoDAOImpl;
 import daoimpl.TournamentDAOImpl;
+import daoimpl.UserDAOImpl;
 import dto.RoleDTO;
 import dto.TeamDTO;
 import dto.TeamInfoDTO;
@@ -127,6 +129,10 @@ public class ViewTournament extends HttpServlet {
 
 	public void joinTour(int tournamentId, HttpServletRequest request, HttpServletResponse response){
 
+		ValidateInput validate = new ValidateInput();
+		ErrorService error = validate.createError();
+		String errorMessage = "";
+		
 		try {
 
 			System.out.println("Join pressed");
@@ -137,35 +143,100 @@ public class ViewTournament extends HttpServlet {
 			teamList = teamDAO.getTeamPlayerList();
 			tourDAO = new TournamentDAOImpl();
 			tourDTO = tourDAO.getTournament(tournamentId);
-
-
-			for(TeamInfoDTO teamIDTO : teamIList){
-				if(teamIDTO.getUserId()==udto.getId()){
-					if(teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
-						for(TeamDTO teamDTO: teamList){
-							if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
-								roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
-								System.out.println(teamDTO.getUserId() + "Joined");
-							}
-						}
-					}
-					else{
-						System.out.println("Bruger ikke team leader for en sport");	
-					}
+			
+			List<TeamInfoDTO> leaderList = listOfTeamsLeadByUser(udto);
+	
+			if (leaderList != null) {
+				if (checkSport(leaderList, tourDTO.getSport()) == true) {
+					roleDAO.createRole(new RoleDTO(udto.getId(), tournamentId, 2));
+					System.out.println(udto.getId() + "Joined");
 				}
-				else{
-					System.out.println("Bruger ikke team leader");
+				else {
+					errorMessage = "Bruger ikke team leader for den korrekte sport";
+					// user is not a teamleader for a team of the correct sport
 				}
 			}
+			else {
+				// User is not a teamleader
+				errorMessage = "Bruger er ikke team leader for et hold";
+			}
+				
+			
+				
+			
+
+//			for(TeamInfoDTO teamIDTO : teamIList){
+//				
+//				if(teamIDTO.getUserId()==udto.getId()){
+//					
+//					
+//					if(teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
+//						
+//						
+//						for(TeamDTO teamDTO: teamList){
+//							
+//							if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
+//								roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
+//								System.out.println(teamDTO.getUserId() + "Joined");
+//							}
+//						}
+//					}
+//					else{
+//						System.out.println("Bruger ikke team leader for en sport");
+//						errorMessage = "Bruger ikke team leader for en sport";
+//					}
+//				}
+//				
+//				
+//				else{
+//					System.out.println("Bruger ikke team leader");
+//					errorMessage = "Bruger ikke team leader";
+//				}
+//			}
 
 		} catch (DALException e) {
+//			ValidateInput validate = new ValidateInput();
+//			ErrorService error = validate.createError();
+//			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
+//			request.setAttribute("error", error);
+			e.printStackTrace();
+		}
+		
+		error.setError("<div class=\"alert alert-danger\">" + errorMessage + "</div>");
+		request.getSession().setAttribute("error", error);
 
-			ValidateInput validate = new ValidateInput();
-			ErrorService error = validate.createError();
-			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
-			request.setAttribute("error", error);
-		} 
-
+	}
+	
+	private List<TeamInfoDTO> listOfTeamsLeadByUser (UserDTO user) {
+		int userId = user.getId();
+		
+		List<TeamInfoDTO> teamlist;
+		List<TeamInfoDTO> leaderlist = new ArrayList<TeamInfoDTO>();
+		
+		
+		try {
+			teamlist = teamIDAO.getTeamList();
+			
+			for (int i = 0; i < teamlist.size(); i++) {
+				if (teamlist.get(i).getUserId() == userId) {
+					leaderlist.add(teamlist.get(i));
+				}
+			}
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return leaderlist;
+	}
+	
+	private boolean checkSport (List<TeamInfoDTO> list, String sport) {
+		boolean result = false;
+			for (TeamInfoDTO teamInfo : list) {
+				if (teamInfo.getSport().equals(sport)) {
+					result = true;
+				}
+			}
+		return result;
 	}
 }
 

@@ -60,6 +60,22 @@ public class TeamDAOImpl implements TeamDAO {
 				+ team.getTeamId());
 
 	}
+	
+	
+	@Override
+	public List<TeamDTO> getTeamList(int userId) throws DALException {
+		List<TeamDTO> list = new ArrayList<TeamDTO>();
+		ResultSet rs = conn.doQuery("SELECT*FROM Team WHERE user_id = " + userId);
+		try {
+			while (rs.next()) {
+				list.add(new TeamDTO(rs.getInt(1), rs.getInt(2)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
 
 	@Override
 	public void disableTeamLeader(TeamDTO role) throws DALException {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import service.ErrorService;
 import dao.RoleDAO;
 import dao.TeamInfoDAO;
 import dao.TournamentDAO;
@@ -46,6 +47,11 @@ public class TournamentSelector extends HttpServlet {
 		int tId = Integer.parseInt(request.getParameter("id"));
 		UserDTO uDTO = (UserDTO) request.getSession().getAttribute("userObject");
 		
+		ErrorService tempError = (ErrorService) request.getSession().getAttribute("error");
+		
+		if (tempError != null) {
+			System.out.println("TournamentSelector: " + tempError.getError());
+		}
 		
 		//Get bracket
 		// the following string b (from the example from the homepage)
