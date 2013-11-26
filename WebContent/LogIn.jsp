@@ -12,9 +12,13 @@
 <body>
 	<div class="container">
 		<div class="header">
-			<h2 class="text-muted">Tournament Hosting</h2>
-			<hr>
-		</div>
+        	<ul class="nav nav-pills pull-right">
+            	<li><a href="index.jsp">Start Page</a></li>
+            	<li><a href="SignUp.jsp">Sign up</a></li>
+            </ul>
+            <h2 class="text-muted">Tournament Hosting</h2>
+            <hr>
+    	</div>
 		<div class="col-md-4 well" id="content">
 			<form method="POST" action="Login">
 				<h2 class="form-signin-heading">Please Login</h2>

@@ -18,7 +18,7 @@
     	<div class="header">
         	<ul class="nav nav-pills pull-right">
             	<li><a href="LogIn.jsp">Log in</a></li>
-            	<li><a href="SignUp.jsp">Sign up</a></li>
+            	<li><a href="index.jsp">Start Page</a></li>
             </ul>
             <h2 class="text-muted">Tournament Hosting</h2>
             <hr>

@@ -64,10 +64,11 @@ public class ViewTournament extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		udto = (UserDTO) request.getSession().getAttribute("userObject");
-		TournamentDTO tDTO = (TournamentDTO) request.getSession().getAttribute("Tournament");	
+		TournamentDTO tDTO = (TournamentDTO) request.getSession().getAttribute("Tournament");
+		System.out.println(tDTO);
 		tId = tDTO.getId();
 
-		if(tDTO.getStatus()!=0){
+		if(tDTO.getStatus()==0){
 
 			if (request.getParameter("joinButton") != null) {
 				System.out.println("Joining Tour");
@@ -80,7 +81,7 @@ public class ViewTournament extends HttpServlet {
 		else{
 			ValidateInput validate = new ValidateInput();
 			ErrorService error = validate.createError();
-			error.setError("<div class=\"alert alert-danger\">Cant join or leave a tournament i progress</div>");
+			error.setError("<div class=\"alert alert-danger\">Cant join or leave a tournament in progress</div>");
 			request.setAttribute("error", error);
 			this.getServletContext().getRequestDispatcher("/LogIn.jsp").forward(request, response);
 		}
