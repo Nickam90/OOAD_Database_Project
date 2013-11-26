@@ -49,17 +49,38 @@ public class TeamManager extends HttpServlet {
 			TeamDAO tDAO = new TeamDAOImpl();
 			switch (action) {
 			case "add member":
+				
+				System.out.println("missing logic");
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);
 
 				break;
+				
+			case "delete member":
+				
+				System.out.println("missing logic");
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);
+
+				break;
+				
 			case "edit":
+				
+				System.out.println("missing logic");
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);
 
 				break;
 
 			case "delete":
+				
+				System.out.println("missing logic");
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);
 
 				break;
 
 			default:
+				
+				System.out.println("missing logic");
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTeam.jsp").forward(request, response);
+				
 				break;
 			}
 		} catch (DALException e) {

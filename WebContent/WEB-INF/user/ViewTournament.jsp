@@ -40,43 +40,27 @@
 		</div>
 	</div>
 	<h1>View Tournament</h1>
-	<br>
-	
+	<br>	
 	<% out.print("<h3>" + tDTO.getTournamentName() + "</h3>"); %>
-
-	<%
-		if (error != null) {
+	<%if (error != null) {
 			out.print("<div class=\"col-md-4 well\" id=\"content\">");
 			out.println(error.getError());
-			out.print("</div>");
-		}
+			out.print("</div>");}
 	%>
-
-	<%
-		Boolean participant = (Boolean) request.getAttribute("participant");
-	%>
-	<%
-		out.print("Are you participant in this tournament? : " + request.getAttribute("participant"));
-	%>
-
-
+	<%Boolean participant = (Boolean) request.getAttribute("participant");%>
+	<%out.print("Are you participant in this tournament? : " + request.getAttribute("participant"));%>
 	<div class="col-md-6 list-group">
 		<ul>
 			<form action="ViewTournament" method="post">
-			
 			<% if (participant != null)
 				out.print("<input class=\"btn btn-lg btn-primary\" type=\"submit\" name=\"leaveButton\" value=\"Leave\" />");
 			else
 				out.print("<input class=\"btn btn-lg btn-primary\" type=\"submit\" name=\"joinButton\" value=\"Join\" />");
 			%>
-		
-<!-- 				<input class="btn btn-lg btn-primary" type="submit" name="joinButton" value="Join" /> -->
-<!-- 				<input class="btn btn-lg btn-primary" type="submit" name="leaveButton" value="Leave" /> -->
 			</form>
 		</ul>
 	</div>
 	<div id="bracket"></div>
 	<br>
-
 </body>
 </html>
