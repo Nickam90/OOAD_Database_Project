@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -137,14 +138,11 @@ public class ViewTournament extends HttpServlet {
 			for(TeamInfoDTO teamIDTO : teamIList){
 				if(teamIDTO.getUserId()==udto.getId()&&teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
 					for(TeamDTO teamDTO: teamList){
-						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()){
+						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()&&roleDAO.getRole(teamDTO.getUserId(), tId).getRole()!=1){
 							roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
 							System.out.println(teamDTO.getUserId() + "Joined");
 						}
 					}
-				}
-				else{
-					System.out.println("Fejl bruger er ikke teamleader for et hold til turneringens sport");
 				}
 			}
 
@@ -154,7 +152,7 @@ public class ViewTournament extends HttpServlet {
 			ErrorService error = validate.createError();
 			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
 			request.setAttribute("error", error);
-		}
+		} 
 
 	}
 }

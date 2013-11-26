@@ -109,8 +109,10 @@ public class EditTournament extends HttpServlet {
 			tourDTO = tourDAO.getTournament(tId);
 			tourDAO.updateTournament(new TournamentDTO(tourDTO.getTournamentName(), tourDTO.getSport(), tourDTO.getMaxParticipants(), 2, tourDTO.getStartDate(), tourDTO.getInfo(), tourDTO.getTournament_type(), tourDTO.getTournament_format()));
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ValidateInput validate = new ValidateInput();
+			ErrorService error = validate.createError();
+			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
+			request.setAttribute("error", error);
 		}
 	}
 
