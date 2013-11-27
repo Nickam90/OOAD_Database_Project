@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="service.ErrorService"%>
+    pageEncoding="UTF-8" import="service.ErrorService" import="dto.TournamentDTO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <% ErrorService error = (ErrorService) request.getAttribute("error"); %>
+<%TournamentDTO tDTO = (TournamentDTO) request.getAttribute("Tournament");%>
+
 
 <html>
 <head>
@@ -13,6 +15,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="bracket/jquery.bracket.min.js"></script>
 <link rel="stylesheet" type="text/css" href="bracket/jquery.bracket.min.css" />
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style type="text/css"></style>
 <script type="text/javascript">
 	var bracketData = $.parseJSON('${bracketData}');
@@ -45,11 +48,12 @@
 	<% out.print("Are you organisor of this tournament? : " + request.getAttribute("organisor"));%>
 	
 	<div class="col-md-6 list-group">
-		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addModal">Add Member</button>
-		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteModal">Delete Member</button>
-		<button class="btn btn-warning btn-lg" data-toggle="modal" data-target="#editModal">Edit Team</button>
-		<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteModal">Delete Team</button>
-		<button class="btn btn-primary btn-lg">Start/Finnish tournament</button>
+		<button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Team</button>
+		<button class="btn btn-primary" data-toggle="modal" data-target="#removeModal">Remove Team</button>
+		<button class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit Tournament</button>
+		<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Tournament</button>
+		<br>
+		${toggleButton}
 	</div>
 	<div id="bracket">
 	</div>
@@ -67,7 +71,7 @@
 						<input class="form-control" type="text" name="name">
 						<br>
 						<input type="hidden" name="action" value="add team">
-						<input type="hidden" name="id" value="">
+						<input type="hidden" class="form-control" name="id" value="<%= tDTO.getId() %>">
 						<button type="submit" class="btn btn-lg btn-primary" >Add Team</button>
 					</form>
 				</div> 
@@ -75,12 +79,12 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	<!-- Modal -->
-	<div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        			<h4 class="modal-title">Delete Team</h4>
+        			<h4 class="modal-title">Remove Team</h4>
       			</div>
 				<div class="modal-body">
 					<form method="POST" action="TournamentManager" >
@@ -88,8 +92,8 @@
 						<input class="form-control" type="text" name="name">
 						<br>
 						<input type="hidden" name="action" value="delete team">
-						<input type="hidden" name="id" value="">
-						<button type="submit" class="btn btn-lg btn-primary" >Delete team</button>
+						<input type="hidden" class="form-control" name="id" value="<%= tDTO.getId() %>">
+						<button type="submit" class="btn btn-lg btn-primary" >Remove team</button>
 					</form>
 				</div> 
 			</div><!-- /.modal-content -->
@@ -105,9 +109,8 @@
       			</div>
 				<div class="modal-body">
 					<form class="form-signin" method="POST" action="TournamentManager">
-            			<h2 class="form-signin-heading">Create New Tournament</h2>
                 		<label> Tournament Name</label>
-               			<input type="text" class="form-control" name="tournament_name" >
+               			<input type="text" class="form-control" name="tournament_name" value="<%= tDTO.getTournamentName() %>">
                 		<br>
                 		<label>Sport</label>
                 		<select class="form-control" name="Sport">
@@ -132,15 +135,17 @@
                     	</select>
                 		<br>
                 		<label>Participant Count</label>
-                		<input type="text" class="form-control" name="size" >
+                		<input type="text" class="form-control" name="size" value="<%= tDTO.getMaxParticipants() %>">
                 		<br>
                 '		<label>Starting Date</label>
-                		<input type="text" class="form-control" name="Starting Date">
+                		<input type="text" class="form-control" name="Starting Date" value="<%= tDTO.getStartDate() %>">
                 		<br>
                 		<label>Info</label>
-                		<input type="text" class="form-control" name="info">
+                		<input type="text" class="form-control" name="info" value="<%= tDTO.getInfo()%>">
                 		<br>
                 		<button class="btn btn-lg btn-primary " type="submit">Edit</button> 
+                		<input type="hidden" class="form-control" name="action" value="edit tournament">
+						<input type="hidden" class="form-control" name="id" value="<%= tDTO.getId() %>">
         			</form>
 	      		</div>
 			</div><!-- /.modal-content -->
@@ -157,7 +162,7 @@
 				<div class="modal-body">
 					<form method="POST" action="TeamManager">
 						<input type="hidden" class="form-control" name="action" value="delete tournament">
-						<input type="hidden" class="form-control" name="id" value="">
+						<input type="hidden" class="form-control" name="id" value="<%= tDTO.getId() %>">
 						<label class="form-control">Are you sure?</label>
 						<br>
 						<button class="btn btn-success btn-lg" data-dismiss="modal" >No</button>

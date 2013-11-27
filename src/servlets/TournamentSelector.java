@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import service.ErrorService;
 import dao.RoleDAO;
 import dao.TeamInfoDAO;
 import dao.TournamentDAO;
@@ -47,11 +46,6 @@ public class TournamentSelector extends HttpServlet {
 		int tId = Integer.parseInt(request.getParameter("id"));
 		UserDTO uDTO = (UserDTO) request.getSession().getAttribute("userObject");
 		
-		ErrorService tempError = (ErrorService) request.getSession().getAttribute("error");
-		
-		if (tempError != null) {
-			System.out.println("TournamentSelector: " + tempError.getError());
-		}
 		
 		//Get bracket
 		// the following string b (from the example from the homepage)
@@ -106,7 +100,7 @@ public class TournamentSelector extends HttpServlet {
 		try {
 			TournamentDAO tDAO = new TournamentDAOImpl();
 			TournamentDTO tDTO = tDAO.getTournament(tId);
-			request.getSession().setAttribute("Tournament", tDTO);
+			request.setAttribute("Tournament", tDTO);
 		}
 		catch (DALException e) {
 			String error = e.getMessage();
@@ -124,7 +118,23 @@ public class TournamentSelector extends HttpServlet {
 			//user is organizer
 			if((rDTO.getRole()) == 1){
 				request.setAttribute("organisor", true);
-				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request, response);			
+				TournamentDAO tDAO = new TournamentDAOImpl();
+				TournamentDTO tDTO = tDAO.getTournament(tId);
+				String buttontext = "Finish tournament";
+				if (tDTO.getStatus() == 0){
+					buttontext = "Start tournament";
+				}
+				if (tDTO.getStatus() != 2){
+					String buttonHtml = "<form method=\"POST\" action=\"TournamentManager\" >"+
+					"<input type=\"hidden\" name=\"action\" value=\"toggle tournament\">"+
+					"<input type=\"hidden\" class=\"form-control\" name=\"id\" value=\""+ tDTO.getId()+"\">"+
+					"<button type=\"submit\" class=\"btn btn-primary\" >"+buttontext+"</button>"+
+					"</form>";
+					request.setAttribute("toggleButton", buttonHtml);
+				}
+				this.getServletContext().getRequestDispatcher("/WEB-INF/user/EditTournament.jsp").forward(request, response);	
+				
+				
 			}
 			//user is participant
 			else{
