@@ -13,16 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.ErrorService;
 import service.ValidateInput;
+import dao.ParticipantListDAO;
 import dao.RoleDAO;
 import dao.TeamDAO;
 import dao.TeamInfoDAO;
 import dao.TournamentDAO;
 import dao.UserDAO;
+import daoimpl.ParticipantListDAOImpl;
 import daoimpl.RoleDAOImpl;
 import daoimpl.TeamDAOImpl;
 import daoimpl.TeamInfoDAOImpl;
 import daoimpl.TournamentDAOImpl;
 import daoimpl.UserDAOImpl;
+import dto.ParticipantListDTO;
 import dto.RoleDTO;
 import dto.TeamDTO;
 import dto.TeamInfoDTO;
@@ -96,36 +99,53 @@ public class ViewTournament extends HttpServlet {
 
 		System.out.println("Leave pressed");
 
-		try{
+		
+		ValidateInput validate = new ValidateInput();
+		ErrorService error = validate.createError();
+		String errorMessage = "";
+
+		try {
+
 			teamDAO = new TeamDAOImpl();
 			teamIDAO = new TeamInfoDAOImpl();
 			roleDAO = new RoleDAOImpl();
 			teamIList = teamIDAO.getTeamList();
-			teamList = teamDAO.getTeamPlayerList();	
+			teamList = teamDAO.getTeamPlayerList();
 			tourDAO = new TournamentDAOImpl();
 			tourDTO = tourDAO.getTournament(tournamentId);
 
-			for(TeamInfoDTO teamIDTO : teamIList){
-				if(teamIDTO.getUserId()==udto.getId()&&teamIDAO.getTeam(teamIDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
+			List<TeamInfoDTO> leaderList = listOfTeamsLeadByUser(udto);
+
+			if (leaderList != null) {
+				if (checkSport(leaderList, tourDTO.getSport()) == true) {
+					
 					for(TeamDTO teamDTO: teamList){
-						if(teamDTO.getTeamId()==teamIDAO.getTeam(teamIDTO.getTeamId()).getTeamId()&&roleDAO.getRole(teamDTO.getUserId(), tId).getRole()!=1){
+						if(teamIDAO.getTeam(teamDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
 							roleDAO.disableRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
-							System.out.println(teamDTO.getUserId() + " leaved");
+							System.out.println(teamDTO.getUserId() + " Joined");
 						}
 					}
 				}
+				else {
+					errorMessage = "Bruger ikke team leader for den korrekte sport";
+					// user is not a teamleader for a team of the correct sport
+				}
+			}
+			else {
+				// User is not a teamleader
+				errorMessage = "Bruger er ikke team leader for et hold";
 			}
 
+		} catch (DALException e) {
+			error.setError("<div class=\"alert alert-danger\">" + errorMessage + "</div>");
+			request.getSession().setAttribute("error", error);
+		}
 
-		}
-		catch (DALException e) {
-			ValidateInput validate = new ValidateInput();
-			ErrorService error = validate.createError();
-			error.setError("<div class=\"alert alert-danger\">"+e+"</div>");
-			request.setAttribute("error", error);
-		}
+		error.setError("<div class=\"alert alert-danger\">" + errorMessage + "</div>");
+		request.getSession().setAttribute("error", error);
 
 	}
+
 
 	public void joinTour(int tournamentId, HttpServletRequest request, HttpServletResponse response){
 
@@ -148,6 +168,7 @@ public class ViewTournament extends HttpServlet {
 
 			if (leaderList != null) {
 				if (checkSport(leaderList, tourDTO.getSport()) == true) {
+					
 					for(TeamDTO teamDTO: teamList){
 						if(teamIDAO.getTeam(teamDTO.getTeamId()).getSport().equals(tourDTO.getSport())){
 							roleDAO.createRole(new RoleDTO(teamDTO.getUserId(), tournamentId, 2));
@@ -197,11 +218,18 @@ public class ViewTournament extends HttpServlet {
 		return leaderlist;
 	}
 
-	private boolean checkSport (List<TeamInfoDTO> list, String sport) {
+	private boolean checkSport (List<TeamInfoDTO> list, String sport) throws DALException {
 		boolean result = false;
 		for (TeamInfoDTO teamInfo : list) {
 			if (teamInfo.getSport().equals(sport)) {
 				result = true;
+				ParticipantListDAO partiDAO= new ParticipantListDAOImpl();
+				if(partiDAO.getParticipant(teamInfo.getTeamId(), tId).equals(new ParticipantListDTO(teamInfo.getTeamId(), tId))){
+				partiDAO.disableParticipant(new ParticipantListDTO(teamInfo.getTeamId(), tId));
+				}
+				else{
+					partiDAO.createParticipant(new ParticipantListDTO(teamInfo.getTeamId(), tId));
+				}
 			}
 		}
 		return result;
