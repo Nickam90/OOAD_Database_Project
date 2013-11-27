@@ -12,14 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.ErrorService;
 import service.ValidateInput;
+import dao.ParticipantListDAO;
 import dao.RoleDAO;
 import dao.TeamDAO;
 import dao.TeamInfoDAO;
 import dao.TournamentDAO;
+import daoimpl.ParticipantListDAOImpl;
 import daoimpl.RoleDAOImpl;
 import daoimpl.TeamDAOImpl;
 import daoimpl.TeamInfoDAOImpl;
 import daoimpl.TournamentDAOImpl;
+import dto.ParticipantListDTO;
 import dto.RoleDTO;
 import dto.TeamDTO;
 import dto.TeamInfoDTO;
@@ -47,6 +50,9 @@ public class TournamentManager extends HttpServlet {
 	private RoleDAO roleDAO;
 	private int teamId;
 	private List<TeamDTO> teamMemberList;
+	private ParticipantListDAO partiDAO;
+	private ParticipantListDTO partiDTO;
+	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -75,6 +81,8 @@ public class TournamentManager extends HttpServlet {
 			teamIDAO = new TeamInfoDAOImpl();
 			teamDAO = new TeamDAOImpl();
 			roleDAO = new RoleDAOImpl();
+			partiDAO = new ParticipantListDAOImpl();
+
 		}
 
 		catch(DALException e){
@@ -121,20 +129,30 @@ public class TournamentManager extends HttpServlet {
 		case "add team":
 
 			teamName = request.getParameter("TeamName");
-			int teamId;
-
 			try {
 				teamId = teamIDAO.getTeamId(teamName);
+			} catch (DALException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				if(teamIDAO.getTeam(teamId).getSport().equals(tourDTO.getSport())){
 
-				List<TeamDTO> teamMemberList = teamDAO.getTeamList(teamId);
+					
 
-				for(TeamDTO teamMember: teamMemberList){
-					roleDAO.createRole(new RoleDTO(teamMember.getUserId(), tId, 1));
+					partiDAO.createParticipant(new ParticipantListDTO(teamId, tId));
+
+					List<TeamDTO> teamMemberList = teamDAO.getTeamList(teamId);
+
+					for(TeamDTO teamMember: teamMemberList){
+						roleDAO.createRole(new RoleDTO(teamMember.getUserId(), tId, 1));
+					}
 				}
 			} catch (DALException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
+
 
 			response.sendRedirect(request.getContextPath() + "/TournamentSelector?id=" + tId);
 
@@ -144,13 +162,16 @@ public class TournamentManager extends HttpServlet {
 
 
 			teamName = request.getParameter("TeamName");
+			
+			
 			try{
 				teamId = teamIDAO.getTeamId(teamName);	
 				teamMemberList = teamDAO.getTeamList(teamId);
 
+				partiDAO.disableParticipant(new ParticipantListDTO(teamId, tId));
+
 				for(TeamDTO teamMember: teamMemberList){
 					roleDAO.disableRole(new RoleDTO(teamMember.getUserId(), tId, 1));
-
 				}
 			} catch (DALException e) {
 				// TODO Auto-generated catch block
