@@ -26,9 +26,9 @@
 	</div>
 	<div class="container">
 		<h3>Edit Team</h3>
-		<p><% out.print("Team Name: " + tDTO.getTeamName());%></p>
-		<p><%out.print("Team Leader: " + teamLeader);%></p>
-		<p><%out.print("Sport: " + tDTO.getSport());%></p>
+		<p>Team Name: ${teamName}</p>
+		<p>Team Leader: ${teamLeader }</p>
+		<p>Sport: ${teamSport}</p>
 		<div class="col-md-6 list-group">
 		<ul>
 			${memberList}
