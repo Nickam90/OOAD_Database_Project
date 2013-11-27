@@ -48,12 +48,14 @@
 	<% out.print("Are you organisor of this tournament? : " + request.getAttribute("organisor"));%>
 	
 	<div class="col-md-6 list-group">
-		<button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Team</button>
-		<button class="btn btn-primary" data-toggle="modal" data-target="#removeModal">Remove Team</button>
-		<button class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit Tournament</button>
-		<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Tournament</button>
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addModal">Add Team</button>
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteModal">Remove Team</button>
+		<button class="btn btn-primary btn-lg" >Start/Finish tournament</button>
+		<button class="btn btn-warning btn-lg" data-toggle="modal" data-target="#editModal">Edit Tournament</button>
+		<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteTourModal">Delete Tournament</button>
+
 		<br>
-		${toggleButton}
+
 	</div>
 	<div id="bracket">
 	</div>
@@ -79,7 +81,9 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	<!-- Modal -->
+
 	<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -152,7 +156,7 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 <!-- Modal -->
-	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="deleteTourModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -160,7 +164,7 @@
         			<h4 class="modal-title">Delete Tournament</h4>
       			</div>
 				<div class="modal-body">
-					<form method="POST" action="TeamManager">
+					<form method="POST" action="TournamentManager">
 						<input type="hidden" class="form-control" name="action" value="delete tournament">
 						<input type="hidden" class="form-control" name="id" value="<%= tDTO.getId() %>">
 						<label class="form-control">Are you sure?</label>
