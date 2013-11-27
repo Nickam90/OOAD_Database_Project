@@ -57,7 +57,8 @@ public class ParticipantListDAOImpl implements ParticipantListDAO {
 
 	public void disableParticipant(ParticipantListDTO participant)
 			throws DALException {
-		// TODO Auto-generated method stub
+		conn.doUpdate("DELETE FROM ParticipantList WHERE team_id = "
+				+ participant.getTeamId() + " AND " + "role = "+ participant.getTournamentId());
 
 	}
 
