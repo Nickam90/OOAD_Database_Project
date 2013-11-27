@@ -12,7 +12,7 @@ import exceptions.DALException;
 
 public class MatchDAOImpl implements MatchDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 	
 
 	public MatchDAOImpl() throws DALException {

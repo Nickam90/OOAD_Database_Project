@@ -13,7 +13,7 @@ import exceptions.DALException;
 
 public class BracketsDAOImpl implements BracketsDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 
 	public BracketsDAOImpl() throws DALException {
 		conn = new MySQLConnector();

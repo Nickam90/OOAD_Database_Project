@@ -14,7 +14,7 @@ import exceptions.DALException;
 
 public class ParticipantListDAOImpl implements ParticipantListDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 
 
 	public ParticipantListDAOImpl() throws DALException {

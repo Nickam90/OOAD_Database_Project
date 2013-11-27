@@ -12,7 +12,7 @@ import exceptions.DALException;
 
 public class TeamInfoDAOImpl implements TeamInfoDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 	
 
 	public TeamInfoDAOImpl() throws DALException {

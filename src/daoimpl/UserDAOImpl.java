@@ -12,7 +12,7 @@ import exceptions.DALException;
 
 public class UserDAOImpl implements UserDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 
 	public UserDAOImpl() throws DALException {
 		conn = new MySQLConnector();

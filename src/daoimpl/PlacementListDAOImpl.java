@@ -12,7 +12,7 @@ import exceptions.DALException;
 
 public class PlacementListDAOImpl implements PlacementListDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 	
 
 	public PlacementListDAOImpl() throws DALException {

@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8" import="service.ErrorService" import="dto.TournamentDTO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%
-	ErrorService error = (ErrorService) session.getAttribute("error");
-%>
+<% ErrorService error = (ErrorService) session.getAttribute("error"); %>
 
 <% TournamentDTO tDTO = (TournamentDTO) request.getSession().getAttribute("Tournament"); %>
+
+<% Boolean participant = (Boolean) request.getAttribute("participant"); %>
 
 <html>
 <head>
@@ -42,15 +42,24 @@
 	<h1>View Tournament</h1>
 	<br>
 	
-	<% out.print("<h3>" + tDTO.getTournamentName() + "</h3>"); %>
-
-	<%
-		Boolean participant = (Boolean) request.getAttribute("participant");
+	<% out.print("Tournamentname: " + tDTO.getTournamentName()); %>
+	
+	<% out.print("Sport: " + tDTO.getSport()); %>
+	
+	<% out.print("Startdate: " + tDTO.getStartDate()); %>
+	
+	<% 
+	String status = "";
+	switch (tDTO.getStatus()) {
+	case 0: status = "Not Started";	break;
+	case 1:	status = "Started";	break;
+	case 2:	status = "Finish";	break;
+	}
+	out.print("Status: " + status);
 	%>
-	<%
-		out.print("Are you participant in this tournament? : " + request.getAttribute("participant"));
-	%>
+	
 
+	<% out.print("Are you participant in this tournament? : " + request.getAttribute("participant")); %>
 	
  	<% if (error != null) out.println(error.getError()); %>
 		

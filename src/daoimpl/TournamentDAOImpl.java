@@ -12,7 +12,7 @@ import exceptions.DALException;
 
 public class TournamentDAOImpl implements TournamentDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 
 	public TournamentDAOImpl() throws DALException {
 		conn = new MySQLConnector();

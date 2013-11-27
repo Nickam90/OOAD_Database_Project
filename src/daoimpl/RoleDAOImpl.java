@@ -12,7 +12,7 @@ import exceptions.DALException;
 
 public class RoleDAOImpl implements RoleDAO {
 
-	private MySQLConnector conn = null;
+	public MySQLConnector conn = null;
 	
 
 	public RoleDAOImpl() throws DALException{
