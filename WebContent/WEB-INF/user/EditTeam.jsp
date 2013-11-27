@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8" import="service.ErrorService"
 	import="dto.TeamInfoDTO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%TeamInfoDTO tDTO = (TeamInfoDTO) session.getAttribute("team");%>
-<%String teamLeader = (String) session.getAttribute("teamLeader");%>
+<%TeamInfoDTO tDTO = (TeamInfoDTO) request.getAttribute("team");%>
+<%String teamLeader = (String) request.getAttribute("teamLeader");%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

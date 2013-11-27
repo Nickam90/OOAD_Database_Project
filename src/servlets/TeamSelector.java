@@ -66,8 +66,10 @@ public class TeamSelector extends HttpServlet {
 			}
 			
 			request.setAttribute("memberList", memberList);
-			request.getSession().setAttribute("team", tDTO);
-			request.getSession().setAttribute("teamLeader", teamLeaderUsername);
+			request.setAttribute("team", tDTO);
+			request.setAttribute("teamName", tDTO.getTeamName());
+			request.setAttribute("teamLeader", teamLeaderUsername);
+			request.setAttribute("teamSport", tDTO.getSport());
 			
 			//user is organizer
 			if((tDTO.getUserId()) == uDTO.getId()){
